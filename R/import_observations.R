@@ -36,8 +36,8 @@ import_observations <- function(observations, conn, max_dist = 336) {
 
   observations$id <- seq_along(observations$x)
   observations$cluster <- seq_along(observations$x)
-  observations$group_x <- floor(observations$x / max_dist)
-  observations$group_y <- floor(observations$y / max_dist)
+  observations$group_x <- floor(observations$x / max_dist / 2)
+  observations$group_y <- floor(observations$y / max_dist / 2)
   cols <- c("id", "x", "y", "survey", "status", "cluster", "group_x", "group_y")
   dbWriteTable(
     conn, name = "observation", append = TRUE, value = observations[, cols]
