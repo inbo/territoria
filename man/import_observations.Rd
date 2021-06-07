@@ -4,12 +4,14 @@
 \alias{import_observations}
 \title{Import the observations}
 \usage{
-import_observations(observations, conn = connect_db())
+import_observations(observations, conn, max_dist = 336)
 }
 \arguments{
 \item{observations}{a data.frame with the observations.}
 
 \item{conn}{a DBI connection to an SQLite database.}
+
+\item{max_dist}{maximum clustering distance in m.}
 }
 \description{
 The function overwrites any existing table with observations.

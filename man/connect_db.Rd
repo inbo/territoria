@@ -4,7 +4,7 @@
 \alias{connect_db}
 \title{Connect to a database}
 \usage{
-connect_db(db = tempfile("territoria", fileext = ".sqlite"))
+connect_db(db = ":memory:")
 }
 \arguments{
 \item{db}{The file name of the database}
