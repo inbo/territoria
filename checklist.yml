@@ -1,0 +1,9 @@
+description: Configuration file for checklist::check_pkg()
+package: yes
+allowed:
+  warnings:
+  - motivation: Initial version. Tests and examples in a later stage.
+    value: |-
+      checking for code which exercises the package ... WARNING
+      No examples, no tests, no vignettes
+  notes: []
