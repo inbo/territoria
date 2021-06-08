@@ -3,6 +3,7 @@
 export(cluster_observation)
 export(connect_db)
 export(distance_matrix)
+export(get_cluster)
 export(import_observations)
 export(simulate_observations)
 importFrom(RSQLite,SQLite)
