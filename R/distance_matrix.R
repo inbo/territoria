@@ -6,7 +6,7 @@
 distance_matrix <- function(conn, max_dist = 336) {
   assert_that(inherits(conn, "SQLiteConnection"))
   assert_that(
-    "observation" %in% dbListTables(conn, "observation"),
+    "observation" %in% dbListTables(conn),
     msg = "No observations found. Did you run `import_observations()`?"
   )
   assert_that(is.number(max_dist), max_dist > 0)

@@ -1,8 +1,14 @@
 #' Get the information from the clusters
 #' @inheritParams import_observations
 #' @export
+#' @importFrom assertthat assert_that
 #' @importFrom RSQLite dbGetQuery
 get_cluster <- function(conn) {
+  assert_that(inherits(conn, "SQLiteConnection"))
+  assert_that(
+    "observation" %in% dbListTables(conn, "observation"),
+    msg = "No observations found. Did you run `import_observations()`?"
+  )
   obs <- dbGetQuery(
     conn, "SELECT x, y, survey, status, cluster FROM observation"
   )

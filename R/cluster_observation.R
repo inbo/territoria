@@ -3,9 +3,17 @@
 #' @param status highest status to include while clustering the observations.
 #' @export
 #' @importFrom assertthat assert_that is.number noNA
-#' @importFrom RSQLite dbClearResult dbGetQuery dbSendQuery
+#' @importFrom RSQLite dbClearResult dbGetQuery dbListTables dbSendQuery
 cluster_observation <- function(conn, status, max_dist = 336) {
   assert_that(inherits(conn, "SQLiteConnection"))
+  assert_that(
+    "observation" %in% dbListTables(conn),
+    msg = "No observations found. Did you run `import_observations()`?"
+  )
+  assert_that(
+    "distance" %in% dbListTables(conn),
+    msg = "No distance matrix found. Did you run `distance_matrix()`?"
+  )
   assert_that(is.count(status), noNA(status))
   assert_that(is.number(max_dist), noNA(max_dist), max_dist > 0)
   candidate_sql <- sprintf(
