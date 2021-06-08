@@ -37,7 +37,7 @@ remotes::install_github("inbo/territoria")
 
 ## Example
 
-We start by simulating some observations. We need the for every
+We start by simulating some observations. We need for every
 observation their `x` and `y` coordinates in a projected coordinate
 system. `survey` is an integer id for every survey. A survey is a unique
 combination of an area and date. `status` is an integer indication the
