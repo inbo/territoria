@@ -37,13 +37,13 @@ remotes::install_github("inbo/territoria")
 
 ## Example
 
-We start by simulating some observations. We need for every
-observation their `x` and `y` coordinates in a projected coordinate
-system. `survey` is an integer id for every survey. A survey is a unique
-combination of an area and date. `status` is an integer indication the
-breeding status. A higher value assume more certainty about breeding.
-Set this to a constant value if you don’t distinct between different
-certainties. In this example we use three classes: `1`, `2` and `3`.
+We start by simulating some observations. We need for every observation
+their `x` and `y` coordinates in a projected coordinate system. `survey`
+is an integer id for every survey. A survey is a unique combination of
+an area and date. `status` is an integer indication the breeding status.
+A higher value assume more certainty about breeding. Set this to a
+constant value if you don’t distinct between different certainties. In
+this example we use three classes: `1`, `2` and `3`.
 
 ``` r
 library(territoria)
@@ -126,26 +126,26 @@ summary(result1$observations)
 #>  Mean   : 931.40   Mean   :1283.44   Mean   :2.417   Mean   :2.033  
 #>  3rd Qu.:1309.80   3rd Qu.:1798.25   3rd Qu.:3.000   3rd Qu.:2.250  
 #>  Max.   :1884.38   Max.   :2082.18   Max.   :4.000   Max.   :3.000  
-#>     cluster    
-#>  Min.   : 1.0  
-#>  1st Qu.: 5.0  
-#>  Median :11.0  
-#>  Mean   :13.3  
-#>  3rd Qu.:16.0  
-#>  Max.   :49.0
+#>     cluster     
+#>  Min.   : 1.00  
+#>  1st Qu.: 6.00  
+#>  Median :11.00  
+#>  Mean   :13.62  
+#>  3rd Qu.:16.00  
+#>  Max.   :49.00
 summary(result1$cluster)
 #>     cluster          n_obs         max_status      centroid_x     
 #>  Min.   : 1.00   Min.   :1.000   Min.   :1.000   Min.   :  19.02  
-#>  1st Qu.: 5.00   1st Qu.:3.000   1st Qu.:2.000   1st Qu.: 363.61  
-#>  Median :11.00   Median :3.000   Median :3.000   Median : 961.62  
-#>  Mean   :13.29   Mean   :3.529   Mean   :2.529   Mean   : 919.72  
-#>  3rd Qu.:16.00   3rd Qu.:5.000   3rd Qu.:3.000   3rd Qu.:1412.54  
-#>  Max.   :49.00   Max.   :6.000   Max.   :3.000   Max.   :1800.93  
+#>  1st Qu.: 6.50   1st Qu.:2.000   1st Qu.:2.000   1st Qu.: 490.94  
+#>  Median :12.00   Median :3.000   Median :2.000   Median : 920.00  
+#>  Mean   :15.57   Mean   :2.609   Mean   :2.391   Mean   : 915.14  
+#>  3rd Qu.:17.50   3rd Qu.:3.000   3rd Qu.:3.000   3rd Qu.:1316.24  
+#>  Max.   :49.00   Max.   :4.000   Max.   :3.000   Max.   :1800.93  
 #>    centroid_y     
 #>  Min.   :  74.42  
-#>  1st Qu.: 802.67  
-#>  Median :1147.25  
-#>  Mean   :1183.70  
-#>  3rd Qu.:1562.08  
-#>  Max.   :1955.90
+#>  1st Qu.: 992.81  
+#>  Median :1280.92  
+#>  Mean   :1292.35  
+#>  3rd Qu.:1829.07  
+#>  Max.   :2036.60
 ```
