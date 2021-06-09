@@ -16,33 +16,34 @@ cluster_observation <- function(conn, status, max_dist = 336) {
   )
   assert_that(is.count(status), noNA(status))
   assert_that(is.number(max_dist), noNA(max_dist), max_dist > 0)
-  candidate_sql <- sprintf(
-    "WITH cte_relevant AS (
-      SELECT
-        min(ob1.cluster, ob2.cluster) AS cl_1,
-        max(ob1.cluster, ob2.cluster) AS cl_2, d.distance
-      FROM distance AS d
-      INNER JOIN observation AS ob1 ON d.id_1 = ob1.id
-      INNER JOIN observation AS ob2 ON d.id_2 = ob2.id
-      WHERE ob1.status >= %1$i AND ob2.status >= %1$i AND
-        ob1.cluster != ob2.cluster
-    )
+  candidate_sql <- sprintf("WITH cte_dist AS (
+  SELECT
+    MIN(o1.cluster, o2.cluster) AS cl1, MAX(o1.cluster, o2.cluster) AS cl2,
+    iif(
+      o1.survey == o2.survey OR o1.status < %1$f OR o2.status < %1$f,
+      %2$f, distance
+    ) AS distance
+  FROM distance AS d
+  INNER JOIN observation AS o1 ON d.id_1 = o1.id
+  INNER JOIN observation AS o2 ON d.id_2 = o2.id
+  WHERE o1.cluster != o2.cluster
+)
 
-    SELECT cl_1, cl_2, max(distance) AS max_dist
-    FROM cte_relevant
-    GROUP BY cl_1, cl_2
-    ORDER BY max(distance)
-    LIMIT 1",
-    status
+SELECT cl1, cl2, MAX(distance) AS distance
+FROM cte_dist
+GROUP BY cl1, cl2
+ORDER BY MAX(distance)
+LIMIT 1",
+    status, 3 * max_dist
   )
   while (TRUE) {
     candidate <- dbGetQuery(conn, candidate_sql)
-    if (nrow(candidate) == 0 || candidate$max_dist > max_dist) {
+    if (nrow(candidate) == 0 || candidate$distance > max_dist) {
       break
     }
     sql <- sprintf(
       "UPDATE observation SET cluster = %i WHERE cluster == %i",
-      candidate$cl_1, candidate$cl_2
+      candidate$cl1, candidate$cl2
     )
     res <- dbSendQuery(conn, sql)
     dbClearResult(res)
