@@ -6,4 +6,10 @@ allowed:
     value: |-
       checking for code which exercises the package ... WARNING
       No examples, no tests, no vignettes
-  notes: []
+  notes:
+  - motivation: Experimental version. Not yet intended for CRAN.
+    value: |-
+      checking CRAN incoming feasibility ... NOTE
+      Maintainer: 'Thierry Onkelinx <thierry.onkelinx@inbo.be>'
+
+      New submission

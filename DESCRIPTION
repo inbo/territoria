@@ -1,7 +1,7 @@
 Type: Package
 Package: territoria
 Title: Clustering Observations from Breeding Birds into Territoria
-Version: 0.0.0
+Version: 0.0.1
 Authors@R:
     c(person(given = "Thierry",
              family = "Onkelinx",
@@ -17,6 +17,7 @@ License: GPL-3
 URL: https://github.com/inbo/territoria
 BugReports: https://github.com/inbo/territoria/issues
 Imports:
+    RSQLite,
     assertthat,
     mvtnorm,
     spatstat.core,

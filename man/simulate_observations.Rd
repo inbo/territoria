@@ -8,7 +8,7 @@ simulate_observations(
   density = 1e-05,
   area = 4e+06,
   gamma = 0.5,
-  radius = 336,
+  max_dist = 336,
   n_survey = 4,
   p_detection = 0.6,
   status_distribution = c(0.2, 0.5, 0.3)
@@ -22,7 +22,7 @@ simulate_observations(
 \item{gamma}{interaction parameter of the Strauss process.
 See \code{gamma} in \code{spatstat.core::rStrauss()}.}
 
-\item{radius}{interaction radius in m.}
+\item{max_dist}{maximum clustering distance in m.}
 
 \item{n_survey}{Number of surveys.}
 
