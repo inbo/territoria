@@ -10,7 +10,7 @@ get_cluster <- function(conn) {
     msg = "No observations found. Did you run `import_observations()`?"
   )
   obs <- dbGetQuery(
-    conn, "SELECT x, y, survey, status, cluster FROM observation"
+    conn, "SELECT id, x, y, survey, status, cluster FROM observation"
   )
   cluster <- dbGetQuery(conn, "
 SELECT
