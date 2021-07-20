@@ -42,5 +42,6 @@ simulate_observations <- function(
   observations$observed <- rbinom(
     nrow(observations), size = 1, prob = p_detection
   ) == 1
+  observations$id <- seq_along(observations$x)
   return(list(observations = observations, centroids = centroids))
 }
