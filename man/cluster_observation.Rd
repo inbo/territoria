@@ -4,7 +4,7 @@
 \alias{cluster_observation}
 \title{Cluster observations}
 \usage{
-cluster_observation(conn, status, max_dist = 336)
+cluster_observation(conn, status, max_dist = 336, reset = FALSE)
 }
 \arguments{
 \item{conn}{a DBI connection to an SQLite database.}
@@ -12,6 +12,9 @@ cluster_observation(conn, status, max_dist = 336)
 \item{status}{highest status to include while clustering the observations.}
 
 \item{max_dist}{maximum clustering distance in m.}
+
+\item{reset}{reset the current clustering.
+Defaults to \code{FALSE}}
 }
 \description{
 Cluster observations
