@@ -20,8 +20,8 @@ Imports:
     RSQLite,
     assertthat,
     mvtnorm,
-    spatstat.core,
-    spatstat.geom
+    spatstat.geom,
+    spatstat.random
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

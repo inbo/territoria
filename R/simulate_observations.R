@@ -11,7 +11,7 @@
 #' @export
 #' @importFrom assertthat assert_that is.count is.number
 #' @importFrom mvtnorm rmvnorm
-#' @importFrom spatstat.core rStrauss
+#' @importFrom spatstat.random rStrauss
 #' @importFrom spatstat.geom owin
 #' @importFrom stats rbinom
 simulate_observations <- function(
