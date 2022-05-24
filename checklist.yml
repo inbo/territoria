@@ -13,3 +13,7 @@ allowed:
       Maintainer: 'Thierry Onkelinx <thierry.onkelinx@inbo.be>'
 
       New submission
+citation_roles:
+- aut
+- cre
+keywords: R package
