@@ -63,7 +63,7 @@ ORDER BY MAX(distance)", status, max_dist)
   while (TRUE) {
     message(".", appendLF = FALSE)
     candidate <- dbGetQuery(conn, candidate_sql)
-    if (nrow(candidate) == 0 || candidate$distance > max_dist) {
+    if (nrow(candidate) == 0 || all(candidate$distance > max_dist)) {
       break
     }
     i <- 1
