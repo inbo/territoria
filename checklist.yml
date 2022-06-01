@@ -16,4 +16,9 @@ allowed:
 citation_roles:
 - aut
 - cre
-keywords: R package
+keywords:
+- breeding bird
+- cluster
+- R package
+spelling:
+  default: en-GB

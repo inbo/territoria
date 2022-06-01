@@ -8,6 +8,6 @@ citEntry(
   url = "https://github.com/inbo/territoria",
   abstract = "Clusters individual observations based on breeding indication and distance between observations.",
   textVersion = "Onkelinx, Thierry (2022) territoria: Clustering Observations from Breeding Birds into Territoria. Version 0.0.2. https://github.com/inbo/territoria",
-  keywords = "R package",
+  keywords = "breeding bird, cluster, R package",
 )
 # end checklist entry
