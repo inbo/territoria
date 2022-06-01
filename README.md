@@ -5,17 +5,20 @@
 
 <!-- badges: start -->
 
-[![Project Status: Concept – Minimal or no implementation has been done
-yet, or the repository is only intended to be a limited example, demo,
-or
-proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![License](https://img.shields.io/badge/license-GPL--3-blue.svg?style=flat)](https://www.gnu.org/licenses/gpl-3.0.html)
 ![GitHub](https://img.shields.io/github/license/inbo/territoria) [![R
 build
 status](https://github.com/inbo/territoria/workflows/check%20package%20on%20main/badge.svg)](https://github.com/inbo/territoria/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/inbo/territoria/branch/main/graph/badge.svg)](https://codecov.io/gh/inbo/territoria?branch=main)
+coverage](https://codecov.io/gh/inbo/territoria/branch/main/graph/badge.svg)](https://app.codecov.io/gh/inbo/territoria?branch=main)
+![r-universe
+name](https://inbo.r-universe.dev/badges/:name?color=c04384)
+![r-universe package](https://inbo.r-universe.dev/badges/territoria)
 ![GitHub code size in
 bytes](https://img.shields.io/github/languages/code-size/inbo/territoria.svg)
 ![GitHub repo
@@ -67,13 +70,13 @@ summary(obs$observations)
 #>  Mean   : 946.40   Mean   :1238.04   Mean   :2.50   Mean   :2.096  
 #>  3rd Qu.:1362.48   3rd Qu.:1764.88   3rd Qu.:3.25   3rd Qu.:3.000  
 #>  Max.   :2012.23   Max.   :2082.18   Max.   :4.00   Max.   :3.000  
-#>   observed      
-#>  Mode :logical  
-#>  FALSE:44       
-#>  TRUE :60       
-#>                 
-#>                 
-#> 
+#>   observed             id        
+#>  Mode :logical   Min.   :  1.00  
+#>  FALSE:44        1st Qu.: 26.75  
+#>  TRUE :60        Median : 52.50  
+#>                  Mean   : 52.50  
+#>                  3rd Qu.: 78.25  
+#>                  Max.   :104.00
 obs <- obs$observations[obs$observations$observed, ]
 ```
 
@@ -103,6 +106,7 @@ observations with a `status` greater than or equal to the set status.
 
 ``` r
 cluster_observation(conn = conn, status = 3, max_dist = 336)
+#> ......
 result3 <- get_cluster(conn = conn)
 nrow(result3$observations) > nrow(result3$cluster)
 #> [1] TRUE
@@ -113,34 +117,35 @@ implies that we combine them with the lower level.
 
 ``` r
 cluster_observation(conn = conn, status = 1, max_dist = 336)
+#> ......................
 result1 <- get_cluster(conn = conn)
 nrow(result1$observations) > nrow(result1$cluster)
 #> [1] TRUE
 nrow(result3$cluster) > nrow(result1$cluster)
 #> [1] TRUE
 summary(result1$observations)
-#>        x                 y               survey          status     
-#>  Min.   : -19.55   Min.   :  40.03   Min.   :1.000   Min.   :1.000  
-#>  1st Qu.: 550.47   1st Qu.: 976.80   1st Qu.:1.000   1st Qu.:2.000  
-#>  Median : 921.68   Median :1282.60   Median :3.000   Median :2.000  
-#>  Mean   : 931.40   Mean   :1283.44   Mean   :2.417   Mean   :2.033  
-#>  3rd Qu.:1309.80   3rd Qu.:1798.25   3rd Qu.:3.000   3rd Qu.:2.250  
-#>  Max.   :1884.38   Max.   :2082.18   Max.   :4.000   Max.   :3.000  
-#>     cluster     
-#>  Min.   : 1.00  
-#>  1st Qu.: 6.00  
-#>  Median :11.00  
-#>  Mean   :13.62  
-#>  3rd Qu.:16.00  
-#>  Max.   :49.00
+#>        id               x                 y               survey     
+#>  Min.   :  2.00   Min.   : -19.55   Min.   :  40.03   Min.   :1.000  
+#>  1st Qu.: 22.75   1st Qu.: 550.47   1st Qu.: 976.80   1st Qu.:1.000  
+#>  Median : 53.50   Median : 921.68   Median :1282.60   Median :3.000  
+#>  Mean   : 50.32   Mean   : 931.40   Mean   :1283.44   Mean   :2.417  
+#>  3rd Qu.: 72.25   3rd Qu.:1309.80   3rd Qu.:1798.25   3rd Qu.:3.000  
+#>  Max.   :103.00   Max.   :1884.38   Max.   :2082.18   Max.   :4.000  
+#>      status         cluster     
+#>  Min.   :1.000   Min.   : 2.00  
+#>  1st Qu.:2.000   1st Qu.:10.00  
+#>  Median :2.000   Median :17.00  
+#>  Mean   :2.033   Mean   :21.33  
+#>  3rd Qu.:2.250   3rd Qu.:23.00  
+#>  Max.   :3.000   Max.   :77.00
 summary(result1$cluster)
 #>     cluster          n_obs         max_status      centroid_x     
-#>  Min.   : 1.00   Min.   :1.000   Min.   :1.000   Min.   :  19.02  
-#>  1st Qu.: 6.50   1st Qu.:2.000   1st Qu.:2.000   1st Qu.: 490.94  
-#>  Median :12.00   Median :3.000   Median :2.000   Median : 920.00  
-#>  Mean   :15.57   Mean   :2.609   Mean   :2.391   Mean   : 915.14  
-#>  3rd Qu.:17.50   3rd Qu.:3.000   3rd Qu.:3.000   3rd Qu.:1316.24  
-#>  Max.   :49.00   Max.   :4.000   Max.   :3.000   Max.   :1800.93  
+#>  Min.   : 2.00   Min.   :1.000   Min.   :1.000   Min.   :  19.02  
+#>  1st Qu.:10.50   1st Qu.:2.000   1st Qu.:2.000   1st Qu.: 490.94  
+#>  Median :19.00   Median :3.000   Median :2.000   Median : 920.00  
+#>  Mean   :24.61   Mean   :2.609   Mean   :2.391   Mean   : 915.14  
+#>  3rd Qu.:26.50   3rd Qu.:3.000   3rd Qu.:3.000   3rd Qu.:1316.24  
+#>  Max.   :77.00   Max.   :4.000   Max.   :3.000   Max.   :1800.93  
 #>    centroid_y     
 #>  Min.   :  74.42  
 #>  1st Qu.: 992.81  

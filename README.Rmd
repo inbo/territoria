@@ -16,11 +16,14 @@ knitr::opts_chunk$set(
 # territoria
 
 <!-- badges: start -->
-[![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle: stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![License](https://img.shields.io/badge/license-GPL--3-blue.svg?style=flat)](https://www.gnu.org/licenses/gpl-3.0.html)
 ![GitHub](https://img.shields.io/github/license/inbo/territoria)
 [![R build status](https://github.com/inbo/territoria/workflows/check%20package%20on%20main/badge.svg)](https://github.com/inbo/territoria/actions)
-[![Codecov test coverage](https://codecov.io/gh/inbo/territoria/branch/main/graph/badge.svg)](https://codecov.io/gh/inbo/territoria?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/inbo/territoria/branch/main/graph/badge.svg)](https://app.codecov.io/gh/inbo/territoria?branch=main)
+![r-universe name](https://inbo.r-universe.dev/badges/:name?color=c04384)
+![r-universe package](https://inbo.r-universe.dev/badges/territoria)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/inbo/territoria.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/inbo/territoria.svg)
 <!-- badges: end -->

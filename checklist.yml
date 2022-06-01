@@ -13,3 +13,12 @@ allowed:
       Maintainer: 'Thierry Onkelinx <thierry.onkelinx@inbo.be>'
 
       New submission
+citation_roles:
+- aut
+- cre
+keywords:
+- breeding bird
+- cluster
+- R package
+spelling:
+  default: en-GB

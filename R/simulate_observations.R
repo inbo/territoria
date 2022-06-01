@@ -11,7 +11,7 @@
 #' @export
 #' @importFrom assertthat assert_that is.count is.number
 #' @importFrom mvtnorm rmvnorm
-#' @importFrom spatstat.core rStrauss
+#' @importFrom spatstat.random rStrauss
 #' @importFrom spatstat.geom owin
 #' @importFrom stats rbinom
 simulate_observations <- function(
@@ -42,5 +42,6 @@ simulate_observations <- function(
   observations$observed <- rbinom(
     nrow(observations), size = 1, prob = p_detection
   ) == 1
+  observations$id <- seq_along(observations$x)
   return(list(observations = observations, centroids = centroids))
 }
