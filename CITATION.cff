@@ -1,24 +1,26 @@
 cff-version: 1.2.0
-message: If you use this software, please cite it as below.
-authors:
-- family-names: Onkelinx
-  given-names: Thierry
-  orcid: https://orcid.org/0000-0001-8804-4216
-contact:
-- email: thierry.onkelinx@inbo.be
-  family-names: Onkelinx
-  given-names: Thierry
-- email: info@inbo.be
-  name: Research Institute for Nature and Forest
+message: If you use this software, please cite it using these metadata.
 title: 'territoria: Clustering Observations from Breeding Birds into Territoria'
-version: 0.0.2
-abstract: Clusters individual observations based on breeding indication and distance
-  between observations.
-license: GPL-3.0
-type: software
-repository-code: https://github.com/inbo/territoria
-identifiers: []
+authors:
+- given-names: Thierry
+  family-names: Onkelinx
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0001-8804-4216
 keywords:
 - breeding bird
 - cluster
-- R package
+contact:
+- given-names: Thierry
+  family-names: Onkelinx
+  affiliation: Research Institute for Nature and Forest (INBO)
+  orcid: 0000-0001-8804-4216
+doi: ~
+license: GPL-3.0
+repository-code: https://github.com/inbo/territoria/
+type: software
+abstract: Clusters individual observations based on breeding indication and distance
+  between observations.
+identifiers:
+- type: url
+  value: []
+version: 0.0.2
