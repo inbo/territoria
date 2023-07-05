@@ -1,6 +1,6 @@
 {
   "title": "territoria: Clustering Observations from Breeding Birds into Territoria",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "GPL-3.0",
   "upload_type": "software",
   "description": "<p>Clusters individual observations based on breeding indication and\ndistance between observations.<\/p>",
