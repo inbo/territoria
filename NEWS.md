@@ -1,6 +1,7 @@
 # territoria 0.0.3
 
-* Update [`checklist`](https://inbo.github.io/checklist/) machinery
+* Update [`checklist`](https://inbo.github.io/checklist/) machinery.
+* Release action works with multiple lines in a message.
 
 # territoria 0.0.2
 
