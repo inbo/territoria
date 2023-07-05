@@ -4,8 +4,8 @@ Title: Clustering Observations from Breeding Birds into Territoria
 Version: 0.0.2
 Authors@R: c(
     person("Thierry", "Onkelinx", , "thierry.onkelinx@inbo.be", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-8804-4216")),
-    person("Research Institute for Nature and Forest", , , "info@inbo.be", role = c("cph", "fnd"))
+           comment = c(ORCID = "0000-0001-8804-4216", affiliation = "Research Institute for Nature and Forest (INBO)")),
+    person("Research Institute for Nature and Forest (INBO)", , , "info@inbo.be", role = c("cph", "fnd"))
   )
 Description: Clusters individual observations based on breeding indication
     and distance between observations.
@@ -18,6 +18,8 @@ Imports:
     RSQLite,
     spatstat.geom,
     spatstat.random
+Config/checklist/communities: inbo
+Config/checklist/keywords: breeding bird; cluster
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
