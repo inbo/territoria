@@ -1,3 +1,7 @@
+# territoria 0.1.0
+
+* Update [`checklist`](https://inbo.github.io/checklist/) machinery.
+
 # territoria 0.0.3
 
 * Update [`checklist`](https://inbo.github.io/checklist/) machinery.

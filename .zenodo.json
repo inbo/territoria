@@ -1,9 +1,9 @@
 {
   "title": "territoria: Clustering Observations from Breeding Birds into Territoria",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "license": "GPL-3.0",
   "upload_type": "software",
-  "description": "<p>Clusters individual observations based on breeding indication and\ndistance between observations.<\/p>",
+  "description": "<p>Clusters individual observations based on breeding indication and distance between observations.<\/p>",
   "keywords": [
     "breeding bird",
     "cluster"
@@ -15,11 +15,11 @@
       "name": "Onkelinx, Thierry",
       "affiliation": "Research Institute for Nature and Forest (INBO)",
       "orcid": "0000-0001-8804-4216",
-      "type": "ContactPerson"
+      "type": "contactperson"
     },
     {
       "name": "Research Institute for Nature and Forest (INBO)",
-      "type": "RightsHolder"
+      "type": "rightsholder"
     }
   ],
   "creators": [
