@@ -12,8 +12,11 @@ Description: Clusters individual observations based on breeding indication
 License: GPL-3
 URL: https://github.com/inbo/territoria
 BugReports: https://github.com/inbo/territoria/issues
+Depends: R (>= 4.1.0)
 Imports:
     assertthat,
+    deldir,
+    igraph,
     mvtnorm,
     RSQLite,
     spatstat.geom,

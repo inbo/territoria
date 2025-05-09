@@ -4,7 +4,7 @@
 \alias{import_observations}
 \title{Import the observations}
 \usage{
-import_observations(observations, conn, max_dist = 336)
+import_observations(observations, conn, max_dist = 336, threshold = 3000)
 }
 \arguments{
 \item{observations}{a data.frame with the observations.}
@@ -12,6 +12,9 @@ import_observations(observations, conn, max_dist = 336)
 \item{conn}{a DBI connection to an SQLite database.}
 
 \item{max_dist}{maximum clustering distance in m.}
+
+\item{threshold}{The minimum distance in m between groups of the same survey.
+This is used to split surveys into different groups.}
 }
 \description{
 The function overwrites any existing table with observations.
