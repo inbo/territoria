@@ -56,6 +56,10 @@ import_observations <- function(
   res <- dbSendQuery(conn, sql)
   dbClearResult(res)
 
+  sql <- "DROP TABLE IF EXISTS unlikely"
+  res <- dbSendQuery(conn, sql)
+  dbClearResult(res)
+
   sql <- "CREATE TABLE survey (
   id INTEGER PRIMARY KEY, original INTEGER NOT NULL
 )"
