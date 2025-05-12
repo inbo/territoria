@@ -3,8 +3,11 @@
 #' The function overwrites any existing table with observations.
 #' @param observations a data.frame with the observations.
 #' @param max_dist maximum clustering distance in m.
-#' @param threshold The minimum distance in m between groups of the same survey.
-#'   This is used to split surveys into different groups.
+#' @param max_edge The maximum edge length in m.
+#' We apply a Delaunay triangulation to the observations per survey.
+#' After removing the edges larger than `max_edge`, we see which observations
+#' result in a connected graph.
+#' Every connected graph is assigned a new survey id.
 #' @param conn a DBI connection to an SQLite database.
 #' @export
 #' @importFrom assertthat assert_that has_name is.number is.string noNA
@@ -13,12 +16,12 @@
 #' @importFrom RSQLite dbClearResult dbSendQuery dbWriteTable
 #' @importFrom stats aggregate rnorm
 import_observations <- function(
-  observations, conn, max_dist = 336, threshold = 3000
+  observations, conn, max_dist = 336, max_edge = 1500
 ) {
   assert_that(
     inherits(observations, "data.frame"),
     is.number(max_dist), noNA(max_dist), max_dist > 0,
-    is.number(threshold), noNA(threshold), threshold > 0, max_dist < threshold
+    is.number(max_edge), noNA(max_edge), max_edge > 0, max_dist < max_edge
   )
   assert_that(
     has_name(observations, "id"), has_name(observations, "user"),
@@ -88,13 +91,13 @@ import_observations <- function(
 
   # splits surveys into clearly distinct groups
   observations$original <- observations$survey
-  # surveys with a bounding box diagonal smaller that the threshold are OK
+  # surveys with a bounding box diagonal smaller that the max_edge are OK
   bb_min <- aggregate(cbind(x, y) ~ survey, data = observations, FUN = min)
   bb_max <- aggregate(cbind(x, y) ~ survey, data = observations, FUN = max)
   diagonal <- sqrt((bb_max$x - bb_min$x) ^ 2 + (bb_max$y - bb_min$y) ^ 2)
-  to_do <- bb_min$survey[diagonal >= threshold]
+  to_do <- bb_min$survey[diagonal >= max_edge]
   done <- observations[!observations$survey %in% to_do, ]
-  # handle surveys with a bounding box diagonal larger than the threshold
+  # handle surveys with a bounding box diagonal larger than the max_edge
   for (i in to_do) {
     candidate <- which(observations$survey == i)
     # make Delaunay triangulation
@@ -110,13 +113,13 @@ import_observations <- function(
         (dd$delsgs$x2 - dd$delsgs$x1) ^ 2 + (dd$delsgs$y2 - dd$delsgs$y1) ^ 2
       )
     )
-    # do nothing when every edge is smaller than the threshold
-    if (max(edges$length) < threshold) {
+    # do nothing when every edge is smaller than the max_edge
+    if (max(edges$length) < max_edge) {
       done <- rbind(done, observations[candidate, ])
       next
     }
-    # remove edges larger than the threshold and decompose the graph
-    edges[edges$length < threshold, ] |>
+    # remove edges larger than the max_edge and decompose the graph
+    edges[edges$length < max_edge, ] |>
       rbind(
         data.frame(
           id1 = observations$id[candidate], id2 = observations$id[candidate],
