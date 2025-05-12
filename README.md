@@ -70,13 +70,13 @@ summary(obs$observations)
 #>  Mean   : 946.40   Mean   :1238.04   Mean   :2.50   Mean   :2.096  
 #>  3rd Qu.:1362.48   3rd Qu.:1764.89   3rd Qu.:3.25   3rd Qu.:3.000  
 #>  Max.   :2012.23   Max.   :2082.18   Max.   :4.00   Max.   :3.000  
-#>   observed             id        
-#>  Mode :logical   Min.   :  1.00  
-#>  FALSE:44        1st Qu.: 26.75  
-#>  TRUE :60        Median : 52.50  
-#>                  Mean   : 52.50  
-#>                  3rd Qu.: 78.25  
-#>                  Max.   :104.00
+#>   observed             id              user       region 
+#>  Mode :logical   Min.   :  1.00   Min.   :1   Min.   :1  
+#>  FALSE:44        1st Qu.: 26.75   1st Qu.:1   1st Qu.:1  
+#>  TRUE :60        Median : 52.50   Median :1   Median :1  
+#>                  Mean   : 52.50   Mean   :1   Mean   :1  
+#>                  3rd Qu.: 78.25   3rd Qu.:1   3rd Qu.:1  
+#>                  Max.   :104.00   Max.   :1   Max.   :1
 obs <- obs$observations[obs$observations$observed, ]
 ```
 
