@@ -117,6 +117,12 @@ import_observations <- function(
     }
     # remove edges larger than the threshold and decompose the graph
     edges[edges$length < threshold, ] |>
+      rbind(
+        data.frame(
+          id1 = observations$id[candidate], id2 = observations$id[candidate],
+          length = 0
+        )
+      ) |>
       graph_from_data_frame(directed = FALSE) |>
       decompose() -> sg
     # do nothing when there is this one graph
