@@ -78,6 +78,12 @@ import_observations <- function(
   res <- dbSendQuery(conn, sql)
   dbClearResult(res)
 
+  sql <- "CREATE TABLE unlikely (
+  survey INTEGER NOT NULL, reason character NOT NULL, value NUMERIC NOT NULL
+)"
+  res <- dbSendQuery(conn, sql)
+  dbClearResult(res)
+
   sql <- "CREATE TABLE observation (
   id INTEGER PRIMARY KEY, x REAL NOT NULL, y REAL NOT NULL,
   group_x INTEGER NOT NULL, group_y INTEGER NOT NULL, survey INTEGER NOT NULL,

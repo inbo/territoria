@@ -35,11 +35,11 @@ unlikely_edge_distribution <- function(
   c(0, diff(dist_test$p_value) > 0) |>
     cumsum() -> dist_test$group
   dist_group <- aggregate(log_p ~ group, data = dist_test, FUN = sum)
-  dist_group$p <- 1 - exp(cumsum(dist_group$log_p))
-  dist_group[dist_group$p < alpha, c("group", "p")] |>
+  dist_group$value <- 1 - exp(cumsum(dist_group$log_p))
+  dist_group[dist_group$value < alpha, c("group", "value")] |>
     merge(dist_test[, c("survey", "group")], by = "group") -> unlikely
   unlikely$reason <- "Difference in distribution of Delaunay edges"
-  unlikely[, c("survey", "reason", "p")] |>
+  unlikely[, c("survey", "reason", "value")] |>
     dbWriteTable(conn = conn, name = "unlikely", append = TRUE)
   return(nrow(unlikely) / nrow(dist_test))
 }

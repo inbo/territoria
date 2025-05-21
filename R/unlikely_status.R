@@ -52,14 +52,14 @@ GROUP BY survey, status >= %1$i",
   c(0, diff(status_obs$n.x) != 0 | diff(status_obs$n.y) != 0) |>
     cumsum() -> status_obs$group
   status_group <- aggregate(log_p ~ group, data = status_obs, FUN = sum)
-  status_group$p <- 1 - exp(cumsum(status_group$log_p))
-  status_group[status_group$p < alpha, c("group", "p")] |>
+  status_group$value <- 1 - exp(cumsum(status_group$log_p))
+  status_group[status_group$value < alpha, c("group", "value")] |>
     merge(status_obs[, c("survey", "group")], by = "group") -> unlikely
   unlikely$reason <- sprintf(
     "fraction status above or equal to %i greather than %.0f%%", status_split,
     100 * threshold
   )
-  unlikely[, c("survey", "reason", "p")] |>
+  unlikely[, c("survey", "reason", "value")] |>
     dbWriteTable(conn = conn, name = "unlikely", append = TRUE)
   return(nrow(unlikely) / nrow(status_obs))
 }
