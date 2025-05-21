@@ -20,3 +20,19 @@ INNER JOIN unlikely AS u ON c.survey = u.survey
 ORDER BY c.region, c.survey" |>
     dbGetQuery(conn = conn)
 }
+
+#' Get the unlikely observations
+#' @inheritParams import_observations
+#' @export
+#' @importFrom assertthat assert_that
+#' @importFrom RSQLite dbGetQuery
+#' @importFrom sf st_as_sf
+get_unlikely_observation <- function(conn, crs = 31370) {
+  assert_that(inherits(conn, "SQLiteConnection"))
+  "SELECT o.id, o.x, o.y, o.status, o.region, o.survey, s.original, s.user
+FROM observation AS o
+INNER JOIN unlikely AS u ON o.survey = u.survey
+INNER JOIN survey AS s on o.survey = s.id" |>
+    dbGetQuery(conn = conn) |>
+    st_as_sf(coords = c("x", "y"), crs = crs)
+}
