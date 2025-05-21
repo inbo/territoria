@@ -9,13 +9,14 @@
 #' @inheritParams sf::st_as_sf
 #' @inheritParams sf::st_buffer
 #' @inheritParams sf::st_concave_hull
+#' @param relevant_area An `sf` object with the relevant area.
 #' @param max_area the maximum area of the concave hull.
 #' @importFrom assertthat assert_that is.number noNA
-#' @importFrom dplyr group_by mutate summarise
+#' @importFrom dplyr filter group_by mutate summarise transmute
 #' @importFrom RSQLite dbGetQuery dbWriteTable
 #' @importFrom rlang .data
-#' @importFrom sf st_area st_as_sf st_buffer st_concave_hull st_intersection
-#' st_union
+#' @importFrom sf st_area st_as_sf st_buffer st_concave_hull st_drop_geometry
+#' st_intersection st_union
 #' @export
 unlikely_survey_area <- function(
   conn, relevant_area, max_area = 3e6, dist = 50, crs = 31370, ratio = 0.95

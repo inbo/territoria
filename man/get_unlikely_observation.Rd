@@ -8,6 +8,8 @@ get_unlikely_observation(conn, crs = 31370)
 }
 \arguments{
 \item{conn}{a DBI connection to an SQLite database.}
+
+\item{crs}{coordinate reference system to be assigned; object of class \code{crs}}
 }
 \description{
 Get the unlikely observations

@@ -23,6 +23,7 @@ ORDER BY c.region, c.survey" |>
 
 #' Get the unlikely observations
 #' @inheritParams import_observations
+#' @inheritParams sf::st_as_sf
 #' @export
 #' @importFrom assertthat assert_that
 #' @importFrom RSQLite dbGetQuery

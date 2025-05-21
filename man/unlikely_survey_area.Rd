@@ -16,6 +16,8 @@ unlikely_survey_area(
 \arguments{
 \item{conn}{a DBI connection to an SQLite database.}
 
+\item{relevant_area}{An \code{sf} object with the relevant area.}
+
 \item{max_area}{the maximum area of the concave hull.}
 
 \item{dist}{numeric or object of class \code{units}; buffer distance(s) for all, or for each of the elements in \code{x}.
