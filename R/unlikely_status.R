@@ -4,7 +4,7 @@
 #' proportion of the observations with status above or equal to the
 #' `status_split `.
 #' Default of 0.5.
-#' @param status_split An integer values indicating which status level splits
+#' @param status_split An integer value indicating which status level splits
 #' the status into two groups.
 #' The default is 2.
 #' @param alpha A numeric value between 0 and 1 indicating the family-wise Type

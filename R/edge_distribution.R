@@ -1,6 +1,6 @@
 #' @title Edge distribution
 #' @description
-#' This function return the length of the edges of the Delaunay triangulation
+#' This function returns the length of the edges of the Delaunay triangulation
 #' per survey.
 #' The function returns only edges with length smaller than twice `max_dist`.
 #' @inheritParams import_observations

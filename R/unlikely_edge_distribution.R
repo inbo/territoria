@@ -9,7 +9,7 @@
 #' and writes the list of unlikely surveys to the database.
 #' @inheritParams import_observations
 #' @inheritParams unlikely_status
-#' @param conn_reference a connection to the reference database.
+#' @param conn_reference A connection to the reference database.
 #' @export
 #' @importFrom assertthat assert_that is.number noNA
 #' @importFrom RSQLite dbWriteTable

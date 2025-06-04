@@ -1,4 +1,4 @@
-#' Get an overview of the unlikely reasons for each survey and region
+#' Get an overview of why the data of each survey and/or region is unlikely to be the result of the counting protocol.
 #' @inheritParams import_observations
 #' @export
 #' @importFrom assertthat assert_that
