@@ -87,7 +87,8 @@ import_observations <- function(
   sql <- "CREATE TABLE observation (
   id INTEGER PRIMARY KEY, x REAL NOT NULL, y REAL NOT NULL,
   group_x INTEGER NOT NULL, group_y INTEGER NOT NULL, survey INTEGER NOT NULL,
-  status INTEGER NOT NULL, cluster INTEGER NOT NULL, region INTEGER
+  status INTEGER NOT NULL, cluster INTEGER NOT NULL, region INTEGER,
+  user INTEGER NOT NULL
 )"
   res <- dbSendQuery(conn, sql)
   dbClearResult(res)
@@ -163,7 +164,7 @@ import_observations <- function(
   done$group_y <- floor(done$y / max_dist / 2)
   cols <- c(
     "id", "x", "y", "survey", "status", "cluster", "group_x", "group_y",
-    "region"
+    "region", "user"
   )
   dbWriteTable(
     conn, name = "observation", append = TRUE, value = done[, cols]
