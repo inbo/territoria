@@ -26,6 +26,7 @@ unlikely_status <- function(
     is.number(alpha), noNA(alpha), alpha > 0, alpha < 1,
     inherits(conn, "SQLiteConnection")
   )
+  surveys <- dbGetQuery(conn = conn, 'SELECT id, user FROM survey'),
   sprintf(
     "SELECT user, status >= %1$i AS above, COUNT(id) AS n
 FROM observation
@@ -57,7 +58,7 @@ GROUP BY user, status >= %1$i",
   status_group$value <- 1 - exp(cumsum(status_group$log_p))
   status_group[status_group$value < alpha, c("group", "value")] |>
     merge(status_obs[, c("user", "group")] |>
-            merge(dbGetQuery(conn = conn, 'SELECT id, user FROM survey'),
+            merge(surveys,
               by = "user") |>
             unique(),
           by = "group") -> unlikely
@@ -69,5 +70,11 @@ GROUP BY user, status >= %1$i",
   )
   unlikely[, c("survey", "reason", "value")] |>
     dbWriteTable(conn = conn, name = "unlikely", append = TRUE)
+  message <-
+    sprintf("%d of %d surveys (%.2f %%) and %d of %d (%.2f %%) users unlikely",
+            nrow(unlikely), nrow(surveys),
+            100 * nrow(unlikely) / nrow(surveys),
+            n_distinct(unlikely$user), n_distinct(surveys$user),
+            100 * n_distinct(unlikely$user) / n_distinct(surveys$user))
   return(nrow(unlikely_s) / nrow(status_obs))
 }
