@@ -153,12 +153,14 @@ import_observations <- function(
   done$survey <- interaction(done$original, done$survey, drop = TRUE) |>
     as.integer()
 
-  # store the original survey id and user id
+  # store the original survey id in col "original" and user id in col "user"
+  # col "id" contains the new survey id, after splitting large surveys.
   surveys <- unique(done[, c("survey", "original", "user")])
   colnames(surveys) <- c("id", "original", "user")
   dbWriteTable(conn, name = "survey", append = TRUE, value = surveys)
 
   # store the observations with new survey id
+  # observation$survey contains the same values as survey$id
   done$cluster <- done$id
   done$group_x <- floor(done$x / max_dist / 2)
   done$group_y <- floor(done$y / max_dist / 2)
