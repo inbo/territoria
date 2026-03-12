@@ -27,39 +27,80 @@ unlikely_status <- function(
     inherits(conn, "SQLiteConnection")
   )
   sprintf(
-    "SELECT survey, status >= %1$i AS above, COUNT(id) AS n
+    "SELECT user, survey, status >= %1$i AS above, COUNT(id) AS n
 FROM observation
 GROUP BY survey, status >= %1$i",
     status_split
   ) |>
     dbGetQuery(conn = conn) -> status_obs
+
+  # test for each survey
   merge(
     status_obs[status_obs$above == 1, c("survey", "n")],
     status_obs[status_obs$above == 0, c("survey", "n")],
     by = "survey", all = TRUE
-  ) -> status_obs
-  status_obs$n.x[is.na(status_obs$n.x)] <- 0
-  status_obs$n.y[is.na(status_obs$n.y)] <- 0
-  status_obs[, c("n.x", "n.y")] |>
+  ) -> status_obs_s
+  status_obs_s$n.x[is.na(status_obs_s$n.x)] <- 0
+  status_obs_s$n.y[is.na(status_obs_s$n.y)] <- 0
+  status_obs_s[, c("n.x", "n.y")] |>
     apply(
       1, threshold = threshold,
       FUN = function(x, threshold) {
         binom.test(x = x, alternative = "greater", p = threshold)$p.value
       }
-    ) -> status_obs$p_value
-  status_obs <- status_obs[order(status_obs$p_value, -status_obs$n.y), ]
-  status_obs$log_p <- log(1 - status_obs$p_value)
-  c(0, diff(status_obs$n.x) != 0 | diff(status_obs$n.y) != 0) |>
-    cumsum() -> status_obs$group
-  status_group <- aggregate(log_p ~ group, data = status_obs, FUN = sum)
+    ) -> status_obs_s$p_value
+  status_obs_s <- status_obs_s[order(status_obs_s$p_value, -status_obs_s$n.y), ]
+  status_obs_s$log_p <- log(1 - status_obs_s$p_value)
+  c(0, diff(status_obs_s$n.x) != 0 | diff(status_obs_s$n.y) != 0) |>
+    cumsum() -> status_obs_s$group
+  status_group <- aggregate(log_p ~ group, data = status_obs_s, FUN = sum)
   status_group$value <- 1 - exp(cumsum(status_group$log_p))
   status_group[status_group$value < alpha, c("group", "value")] |>
-    merge(status_obs[, c("survey", "group")], by = "group") -> unlikely
-  unlikely$reason <- sprintf(
-    "fraction status above or equal to %i greather than %.0f%%", status_split,
-    100 * threshold
+    merge(status_obs_s[, c("survey", "group")], by = "group") -> unlikely_s
+  unlikely_s$reason <- sprintf(
+    "fraction status above or equal to %i greater than %.0f%% in the survey",
+    status_split, 100 * threshold
   )
+  # test for each user
+  sprintf(
+    "SELECT user, status >= %1$i AS above, COUNT(id) AS n
+FROM observation
+GROUP BY user, status >= %1$i",
+    status_split
+  ) |>
+    dbGetQuery(conn = conn) -> status_obs_u
+  merge(
+    status_obs_u[status_obs_u$above == 1, c("user", "n")],
+    status_obs_u[status_obs_u$above == 0, c("user", "n")],
+    by = "user", all = TRUE
+  ) -> status_obs_u
+  status_obs_u$n.x[is.na(status_obs_u$n.x)] <- 0
+  status_obs_u$n.y[is.na(status_obs_u$n.y)] <- 0
+  status_obs_u[, c("n.x", "n.y")] |>
+    apply(
+      1, threshold = threshold,
+      FUN = function(x, threshold) {
+        binom.test(x = x, alternative = "greater", p = threshold)$p.value
+      }
+    ) -> status_obs_u$p_value
+  status_obs_u <- status_obs_u[order(status_obs_u$p_value, -status_obs_u$n.y), ]
+  status_obs_u$log_p <- log(1 - status_obs_u$p_value)
+  c(0, diff(status_obs_u$n.x) != 0 | diff(status_obs_u$n.y) != 0) |>
+    cumsum() -> status_obs_u$group
+  status_group <- aggregate(log_p ~ group, data = status_obs_u, FUN = sum)
+  status_group$value <- 1 - exp(cumsum(status_group$log_p))
+  status_group[status_group$value < alpha, c("group", "value")] |>
+    merge(status_obs_u[, c("user", "group")] |>
+            merge(status_obs[, c("user", "survey")], by = "user") |>
+            unique(),
+          by = "group") -> unlikely_u
+  unlikely_u$reason <- sprintf(
+    "fraction status above or equal to %i greater than %.0f%% for the user",
+    status_split, 100 * threshold
+  )
+
+  unlikely <- rbind(unlikely_s, unlikely_u[, -3])
   unlikely[, c("survey", "reason", "value")] |>
     dbWriteTable(conn = conn, name = "unlikely", append = TRUE)
-  return(nrow(unlikely) / nrow(status_obs))
+  return(nrow(unlikely_s) / nrow(status_obs))
 }
