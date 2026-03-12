@@ -26,7 +26,7 @@ unlikely_status <- function(
     is.number(alpha), noNA(alpha), alpha > 0, alpha < 1,
     inherits(conn, "SQLiteConnection")
   )
-  surveys <- dbGetQuery(conn = conn, 'SELECT id, user FROM survey'),
+  surveys <- dbGetQuery(conn = conn, "SELECT id, user FROM survey")
   sprintf(
     "SELECT user, status >= %1$i AS above, COUNT(id) AS n
 FROM observation
