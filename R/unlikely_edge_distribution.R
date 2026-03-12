@@ -18,9 +18,7 @@ unlikely_edge_distribution <- function(
   conn, conn_reference, max_dist = 336, alpha = 0.01
 ) {
   assert_that(is.number(alpha), noNA(alpha), alpha > 0, alpha < 1)
-  edges <- edge_distribution(conn = conn, max_dist = max_dist) %>%
-    left_join(dbGetQuery(conn = conn, 'SELECT original, user FROM survey'),
-              by = join_by(survey == original))
+  edges <- edge_distribution(conn = conn, max_dist = max_dist)
   reference <- edge_distribution(conn = conn_reference, max_dist = max_dist)
   survey <- unique(edges$survey)
   user <- unique(edges$user)
@@ -48,23 +46,27 @@ unlikely_edge_distribution <- function(
   dist_group <- aggregate(log_p ~ group, data = dist_test, FUN = sum)
   dist_group$value <- 1 - exp(cumsum(dist_group$log_p))
   dist_group[dist_group$value < alpha, c("group", "value")] |>
-    merge(dist_test[, c("survey", "group")], by = "group") -> unlikely
-  unlikely$reason <- "Difference in distribution of Delaunay edges of the survey"
+    merge(dist_test[, c("survey", "group")], by = "group") -> unlikely_survey
+  unlikely_survey$reason <- "Difference in distribution of Delaunay edges of the survey"
 
   dist_test <- data.frame(user = user, p_value = p_user)
   dist_test <- dist_test[order(dist_test$p_value), ]
   dist_test$log_p <- log(1 - dist_test$p_value)
   c(0, diff(dist_test$p_value) > 0) |>
     cumsum() -> dist_test$group
-  dist_test <- dbGetQuery(conn = conn, 'SELECT original, user FROM survey') |>
-    left_join(dist_test, by = join_by(user == user))
   dist_group <- aggregate(log_p ~ group, data = dist_test, FUN = sum)
   dist_group$value <- 1 - exp(cumsum(dist_group$log_p))
+  dist_test <- merge(
+    dbGetQuery(conn = conn, 'SELECT id, user FROM survey'),
+    dist_test)
+  colnames(dist_test)[2] <- "survey"
   dist_group[dist_group$value < alpha, c("group", "value")] |>
-    merge(dist_test[, c("survey", "group")], by = "group") -> unlikely
-  unlikely$reason <- "Difference in distribution of Delaunay edges of the user"
+    merge(dist_test[, c("survey", "group")], by = "group") -> unlikely_user
+  unlikely_user$reason <-
+    "Difference in distribution of Delaunay edges of the user"
+  unlikely <- rbind(unlikely_survey, unlikely_user)
 
   unlikely[, c("survey", "reason", "value")] |>
     dbWriteTable(conn = conn, name = "unlikely", append = TRUE)
-  return(nrow(unlikely) / nrow(dist_test))
+  return(nrow(unlikely_survey) / length(survey))
 }
