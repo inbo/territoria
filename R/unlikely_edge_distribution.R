@@ -40,7 +40,8 @@ unlikely_edge_distribution <- function(
   #add id col for survey number
   dist_test <- merge(
     dbGetQuery(conn = conn, "SELECT id, user FROM survey"),
-    dist_test)
+    dist_test
+  )
   colnames(dist_test)[2] <- "survey"
   dist_group[dist_group$value < alpha, c("group", "value")] |>
     merge(dist_test[, c("survey", "user", "group")], by = "group") -> unlikely
