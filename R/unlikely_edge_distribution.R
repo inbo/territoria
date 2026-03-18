@@ -40,7 +40,8 @@ unlikely_edge_distribution <- function(
   #add id col for survey number
   dist_test <- merge(
     dbGetQuery(conn = conn, "SELECT id, user FROM survey"),
-    dist_test)
+    dist_test
+  )
   colnames(dist_test)[2] <- "survey"
   dist_group[dist_group$value < alpha, c("group", "value")] |>
     merge(dist_test[, c("survey", "user", "group")], by = "group") -> unlikely
@@ -54,7 +55,7 @@ unlikely_edge_distribution <- function(
     sprintf("%d of %d surveys (%.2f %%) and %d of %d (%.2f %%) users unlikely",
             nrow(unlikely), length(survey),
             100 * nrow(unlikely) / length(survey),
-            n_distinct(unlikely$user), length(user),
-            100 * n_distinct(unlikely$user) / length(user))
+            length(unique(unlikely$user)), length(user),
+            100 * length(unique(unlikely$user)) / length(user))
   return(message)
 }

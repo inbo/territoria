@@ -57,11 +57,12 @@ GROUP BY user, status >= %1$i",
   status_group <- aggregate(log_p ~ group, data = status_obs, FUN = sum)
   status_group$value <- 1 - exp(cumsum(status_group$log_p))
   status_group[status_group$value < alpha, c("group", "value")] |>
-    merge(status_obs[, c("user", "group")] |>
-            merge(surveys,
-              by = "user") |>
-            unique(),
-          by = "group") -> unlikely
+    merge(
+      status_obs[, c("user", "group")] |>
+        merge(surveys, by = "user") |>
+        unique(),
+      by = "group"
+      ) -> unlikely
   colnames(unlikely)[4] <- "survey"
 
   unlikely$reason <- sprintf(
@@ -76,5 +77,5 @@ GROUP BY user, status >= %1$i",
             100 * nrow(unlikely) / nrow(surveys),
             n_distinct(unlikely$user), n_distinct(surveys$user),
             100 * n_distinct(unlikely$user) / n_distinct(surveys$user))
-  return(nrow(unlikely_s) / nrow(status_obs))
+  return(message)
 }
