@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_unlikely.R
 \name{get_unlikely_summary}
 \alias{get_unlikely_summary}
-\title{Get an overview of the unlikely reasons for each survey and region}
+\title{Get an overview of why the data of each survey and/or region is unlikely to be the result of the counting protocol.}
 \usage{
 get_unlikely_summary(conn = conn)
 }
@@ -10,5 +10,5 @@ get_unlikely_summary(conn = conn)
 \item{conn}{a DBI connection to an SQLite database.}
 }
 \description{
-Get an overview of the unlikely reasons for each survey and region
+Get an overview of why the data of each survey and/or region is unlikely to be the result of the counting protocol.
 }

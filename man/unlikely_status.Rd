@@ -14,7 +14,7 @@ proportion of the observations with status above or equal to the
 \code{status_split }.
 Default of 0.5.}
 
-\item{status_split}{An integer values indicating which status level splits
+\item{status_split}{An integer value indicating which status level splits
 the status into two groups.
 The default is 2.}
 

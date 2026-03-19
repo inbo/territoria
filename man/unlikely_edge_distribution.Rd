@@ -9,7 +9,7 @@ unlikely_edge_distribution(conn, conn_reference, max_dist = 336, alpha = 0.01)
 \arguments{
 \item{conn}{a DBI connection to an SQLite database.}
 
-\item{conn_reference}{a connection to the reference database.}
+\item{conn_reference}{A connection to the reference database.}
 
 \item{max_dist}{maximum clustering distance in m.}
 

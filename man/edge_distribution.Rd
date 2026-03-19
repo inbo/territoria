@@ -12,7 +12,7 @@ edge_distribution(conn, max_dist = 336)
 \item{max_dist}{maximum clustering distance in m.}
 }
 \description{
-This function return the length of the edges of the Delaunay triangulation
+This function returns the length of the edges of the Delaunay triangulation
 per survey.
 The function returns only edges with length smaller than twice \code{max_dist}.
 }
