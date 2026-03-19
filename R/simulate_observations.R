@@ -43,5 +43,7 @@ simulate_observations <- function(
     nrow(observations), size = 1, prob = p_detection
   ) == 1
   observations$id <- seq_along(observations$x)
+  observations$user <- 1
+  observations$region <- 1
   return(list(observations = observations, centroids = centroids))
 }

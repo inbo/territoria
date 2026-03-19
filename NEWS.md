@@ -1,3 +1,24 @@
+# territoria 0.1.0
+
+* `import_observations()` splits surveys with clearly distinct groups of
+  observations into multiple surveys.
+  This is done by clustering the observations and checking if the clusters are
+  too far apart geographically.
+  It also requires to provide a user and region id.
+* `edge_distribution()` return the distribution of the length of the edges of a Delaunay
+  triangulation on the observations per survey.
+* Add `unlikely_survey_area()`, `unlikely_status()` and
+  `unlikely_edge_distribution()` to detect surveys which are unlikely done
+  according to the sampling protocol.
+* `distance_matrix()` ignores observations from unlikely surveys.
+  Hence `cluster_observation()` will ignore them during the clustering and
+  `get_cluster()` ignores them.
+* `get_total()` returns the total number of individuals per region based on the
+  clustering.
+* `get_unlikely_summary()` and `get_unlikely_observation()` return the unlikely
+  surveys and observations.
+* Update [`checklist`](https://inbo.github.io/checklist/) machinery.
+
 # territoria 0.0.3
 
 * Update [`checklist`](https://inbo.github.io/checklist/) machinery.

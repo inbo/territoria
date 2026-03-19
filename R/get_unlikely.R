@@ -1,0 +1,39 @@
+#' Get an overview of why the data of each survey and/or region is unlikely to be the result of the counting protocol.
+#' @inheritParams import_observations
+#' @export
+#' @importFrom assertthat assert_that
+#' @importFrom RSQLite dbGetQuery
+get_unlikely_summary <- function(conn = conn) {
+  assert_that(inherits(conn, "SQLiteConnection"))
+  "WITH cte AS (
+  SELECT survey, region, COUNT(id) n
+  FROM observation
+  WHERE region IS NOT NULL
+  GROUP BY survey, region
+),
+cte_survey AS (
+  SELECT survey, region FROM cte GROUP BY survey HAVING n = MAX(n)
+)
+SELECT c.region, c.survey, u.reason
+FROM cte_survey AS c
+INNER JOIN unlikely AS u ON c.survey = u.survey
+ORDER BY c.region, c.survey" |>
+    dbGetQuery(conn = conn)
+}
+
+#' Get the unlikely observations
+#' @inheritParams import_observations
+#' @inheritParams sf::st_as_sf
+#' @export
+#' @importFrom assertthat assert_that
+#' @importFrom RSQLite dbGetQuery
+#' @importFrom sf st_as_sf
+get_unlikely_observation <- function(conn, crs = 31370) {
+  assert_that(inherits(conn, "SQLiteConnection"))
+  "SELECT o.id, o.x, o.y, o.status, o.region, o.survey, s.original, s.user
+FROM observation AS o
+INNER JOIN unlikely AS u ON o.survey = u.survey
+INNER JOIN survey AS s on o.survey = s.id" |>
+    dbGetQuery(conn = conn) |>
+    st_as_sf(coords = c("x", "y"), crs = crs)
+}

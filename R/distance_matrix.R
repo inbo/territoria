@@ -27,9 +27,11 @@ ON distance (distance)"
   sql <- sprintf(
     "WITH cte_obs AS (
   SELECT
-    id, x, y, group_x, group_y, group_x + 1 AS group_xp,
-  group_y + 1 AS group_yp, group_y - 1 AS group_ym
-  FROM observation
+    o.id, o.x, o.y, o.group_x, o.group_y, o.group_x + 1 AS group_xp,
+    o.group_y + 1 AS group_yp, o.group_y - 1 AS group_ym
+  FROM observation AS o
+  LEFT JOIN unlikely AS u ON o.survey = u.survey
+  WHERE u.value IS NULL
 ),
 cte_distance AS (
   SELECT

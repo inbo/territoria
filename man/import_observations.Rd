@@ -4,7 +4,7 @@
 \alias{import_observations}
 \title{Import the observations}
 \usage{
-import_observations(observations, conn, max_dist = 336)
+import_observations(observations, conn, max_dist = 336, max_edge = 1500)
 }
 \arguments{
 \item{observations}{a data.frame with the observations.}
@@ -12,6 +12,12 @@ import_observations(observations, conn, max_dist = 336)
 \item{conn}{a DBI connection to an SQLite database.}
 
 \item{max_dist}{maximum clustering distance in m.}
+
+\item{max_edge}{The maximum edge length in m.
+We apply a Delaunay triangulation to the observations per survey.
+After removing the edges larger than \code{max_edge}, we see which observations
+result in a connected graph.
+Every connected graph is assigned a new survey id.}
 }
 \description{
 The function overwrites any existing table with observations.
